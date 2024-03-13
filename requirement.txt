@@ -1,0 +1,7 @@
+pandas
+bs4
+nlp-id == 0.1.15.0
+nltk
+python-dotenv == 1.0.1
+python-telegram-bot == 20.8
+SQLAlchemy == 2.0.28
