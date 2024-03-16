@@ -25,7 +25,7 @@ async def start(update:Update, context:ContextTypes.DEFAULT_TYPE):
     print("_"*40)
     await context.bot.send_message(
         chat_id=update.effective_message.chat_id,
-        text="Halo, selamat datang di bot resep makanan. Silahkan masukkan bahan masak yang ingin dimasak.\nContoh : ayam, kentang dan jamur."
+        text="Halo, selamat datang di bot resep makanan. Silahkan masukkan bahan masak yang ingin dimasak.\nFormat : /menu (bahan makanan)\nContoh : /menu ayam, kentang dan jamur."
     )
 
 async def menu(update:Update, context:ContextTypes.DEFAULT_TYPE):
@@ -47,9 +47,13 @@ async def menu(update:Update, context:ContextTypes.DEFAULT_TYPE):
     qry = Query('recipe.db')
     df = qry.get_data(list_ingd)
     data_temp = df.copy()
-    
+
     if df.empty:
         ans = f"Maaf, tidak ada menu dengan bahan {tp.camelcase(list_ingd)}."
+        await context.bot.send_message(
+            chat_id=update.effective_message.chat_id,
+            text= ans
+        )
     else:
         '''cari data dengan cosine_similarity terdekat dengan inputan user'''
         sd = SearchData(tp, df) 
